@@ -12,6 +12,7 @@ namespace :gitcopy do
     end
 
     if $?.exitstatus == 0
+      puts "git archive #{no_repo_url ? '' : "--remote #{fetch(:repo_url)}" } --format=tar #{fetch(:branch)}:#{fetch(:sub_directory)} | gzip > #{ archive_name }"
       system "git archive #{no_repo_url ? '' : "--remote #{fetch(:repo_url)}" } --format=tar #{fetch(:branch)}:#{fetch(:sub_directory)} | gzip > #{ archive_name }"
       set :current_revision, `git rev-list --max-count=1 --abbrev-commit #{fetch(:branch)}`.chomp('')
     else
